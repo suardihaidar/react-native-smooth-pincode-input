@@ -70,10 +70,10 @@ class SmoothPinCodeInput extends Component {
     this.setState({ maskDelay });
 
     if (maskDelay) { // mask password after delay
-      const maskTimeout = setTimeout(() => {
-          this.setState({ maskDelay: false });
-          clearTimeout(maskTimeout);
-        },
+      clearTimeout(this.maskTimeout);
+      this.maskTimeout = setTimeout(() => {
+        this.setState({ maskDelay: false });
+      },
         this.props.maskDelay
       );
     }
@@ -91,6 +91,10 @@ class SmoothPinCodeInput extends Component {
   _onFocused = (focused) => {
     this.setState({ focused });
   };
+
+  componentWillUnmount() {
+    clearTimeout(this.maskTimeout);
+  }
 
   render() {
     const {
