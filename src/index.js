@@ -36,7 +36,6 @@ class SmoothPinCodeInput extends Component {
     focused: false,
   };
   ref = React.createRef();
-  inputRef = React.createRef();
 
   shake = () => {
     return this.ref.current.shake(650);
@@ -191,7 +190,9 @@ class SmoothPinCodeInput extends Component {
         </View>
         <TextInput
           value={value}
-          ref={this.inputRef}
+          ref={ref => {
+            this.inputRef = ref
+          }}
           onChangeText={this._inputCode}
           onKeyPress={this._keyPress}
           onFocus={() => this._onFocused(true)}
@@ -224,7 +225,7 @@ class SmoothPinCodeInput extends Component {
     mask: '*',
     maskDelay: 200,
     keyboardType: 'numeric',
-    autoFocus: false,
+    autoFocus: true,
     restrictToNumbers: false,
     containerStyle: styles.containerDefault,
     cellStyle: styles.cellDefault,
